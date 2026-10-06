@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17101f">
+  <title>{{ 'Create account' if mode == 'register' else 'Sign in' }} · Project Momochan</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body class="auth-page">
+  <main class="auth-layout">
+    <section class="auth-intro">
+      <a class="wordmark" href="/login"><span class="wordmark-mark">m</span><span>project <b>momochan</b></span></a>
+      <p class="eyebrow">Three worlds, one account</p>
+      <h1>Stay for a while,<br>make it a story.</h1>
+      <p class="intro-copy">Save your adventures on the server and pick up where you left off. One account for the garden, the open sea, and the quiet waters.</p>
+      <div class="orbit orbit-one">✿</div><div class="orbit orbit-two">✧</div>
+    </section>
+    <section class="auth-panel" aria-labelledby="auth-title">
+      <p class="eyebrow">Your little corner</p>
+      <h2 id="auth-title">{{ 'Your story starts here' if mode == 'register' else 'Welcome back' }}</h2>
+      <p class="auth-subtitle">{{ 'Create an account to save progress across all three games.' if mode == 'register' else 'Sign in to jump back into your games.' }}</p>
+      {% if message %}<div class="form-alert" role="alert">{{ message }}</div>{% endif %}
+      <form method="post" action="/{{ mode }}" class="auth-form">
+        <label for="username">Username</label>
+        <input id="username" name="username" autocomplete="username" minlength="3" maxlength="24" required>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="{{ 'new-password' if mode == 'register' else 'current-password' }}" minlength="10" maxlength="128" required>
+        {% if mode == 'register' %}<span class="field-hint">At least 10 characters.</span>{% endif %}
+        <button class="button button-primary" type="submit">{{ 'Create account' if mode == 'register' else 'Sign in to Momochan' }} <span aria-hidden="true">↗</span></button>
+      </form>
+      <p class="auth-switch">{{ 'Already have an account?' if mode == 'register' else 'New to Momochan?' }} <a href="/{{ 'login' if mode == 'register' else 'register' }}">{{ 'Sign in' if mode == 'register' else 'Create an account' }}</a></p>
+      <div class="privacy-note"><span>♡</span> Your game progress is saved to your account.</div>
+    </section>
+  </main>
+</body>
+</html>

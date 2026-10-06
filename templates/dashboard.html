@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17101f">
+  <title>Home · Project Momochan</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <div class="dashboard-shell">
+    <header class="app-header">
+      <a class="wordmark" href="/"><span class="wordmark-mark">m</span><span>project <b>momochan</b></span></a>
+      <div class="account-menu"><span class="avatar">{{ user['username'][:1]|upper }}</span><span class="account-name">{{ user['username'] }}</span><form action="/logout" method="post"><button class="button button-quiet" type="submit" aria-label="Sign out">Sign out <span aria-hidden="true">↗</span></button></form></div>
+    </header>
+    <main>
+      <section class="welcome-band">
+        <div class="welcome-copy"><p class="eyebrow">Your own little corner</p><h1>Hey, {{ user['username'] }} <span class="hello-mark">✿</span></h1><p>Three games. One home for all your progress.</p></div>
+        <div class="welcome-stamp"><span>01</span><small>PLAY<br>YOUR WAY</small></div>
+      </section>
+      <div class="section-heading"><div><p class="eyebrow">Choose your next story</p><h2>Game library</h2></div><span class="library-count">03 <i>GAMES</i></span></div>
+      <section class="game-grid" aria-label="Game library">
+        {% for game_id, game in games.items() %}
+        <article class="game-card {{ game['tone'] }}">
+          <div class="game-card-top"><span class="game-icon" aria-hidden="true">{{ game['icon'] }}</span><span class="game-index">0{{ loop.index }} / 03</span></div>
+          <div class="game-card-copy"><p class="eyebrow">{% if game_id == 'la-puta' %}SIMULATION · STRATEGY{% elif game_id == 'pirate' %}ADVENTURE · HIGH SEAS{% else %}RELAXING · COLLECTION{% endif %}</p><h3>{{ game['title'] }}</h3><p>{% if game_id == 'la-puta' %}Build your business, manage your gardens, and find your rhythm in the market.{% elif game_id == 'pirate' %}Explore distant ports, gather your crew, and chart your own pirate tale.{% else %}Cast a line, collect fish, and fill your aquarium.{% endif %}</p></div>
+          <a class="launch-link" href="/play/{{ game_id }}"><span>Play game</span><span class="launch-arrow" aria-hidden="true">↗</span></a>
+        </article>
+        {% endfor %}
+      </section>
+      <footer class="dashboard-footer"><span><i class="status-dot"></i> Progress saves automatically to your account</span><span>ONE ACCOUNT <b>·</b> THREE WORLDS</span></footer>
+    </main>
+  </div>
+</body>
+</html>
